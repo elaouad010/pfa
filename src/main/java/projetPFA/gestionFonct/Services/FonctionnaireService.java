@@ -1,28 +1,12 @@
 package projetPFA.gestionFonct.Services;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import jakarta.transaction.Transactional;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import projetPFA.gestionFonct.Fonctionnaire;
 import projetPFA.gestionFonct.Repositories.FonctionnaireRepository;
-import projetPFA.gestionFonct.info.embadddedinfo.InfoAssurance;
-import projetPFA.gestionFonct.info.embadddedinfo.OrganismesSociales;
-import projetPFA.gestionFonct.info.embadddedinfo.infoAdmin.InfoAdministratives;
-import projetPFA.gestionFonct.info.embadddedinfo.infoFamil.InfoFamiliales;
-import projetPFA.gestionFonct.info.embadddedinfo.infoPrev.InfoPrevoyanceSociale;
-import projetPFA.gestionFonct.info.embadddedinfo.infoRetr.InfoRetraite;
-import projetPFA.gestionFonct.info.historiqueinfo.Affectation.Affectations;
-import projetPFA.gestionFonct.info.historiqueinfo.Diplomes;
-import projetPFA.gestionFonct.info.historiqueinfo.Mouvements;
-import projetPFA.gestionFonct.info.historiqueinfo.Notations;
-import projetPFA.gestionFonct.info.historiqueinfo.Sanctions;
-import projetPFA.gestionFonct.info.historiqueinfo.document.DocumentPieceJointe;
-import projetPFA.gestionFonct.test;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -40,10 +24,11 @@ public class FonctionnaireService {
     }
 
     public List<Fonctionnaire> getAllFonct() {
+
         return fonctionnaireRepository.findAll();
     }
 @Transactional
-    public void updateFonct(String cin, Fonctionnaire fonctionnaire) {
+    public Fonctionnaire updateFonct(String cin, Fonctionnaire fonctionnaire) {
     Fonctionnaire fonct=fonctionnaireRepository.findById(cin).orElseThrow(()-> new IllegalStateException("NO INFOPERSO WITH THIS CIN : "+cin+"IS FOUND"));
     if(fonctionnaire.getNom()!= null && fonctionnaire.getNom().length()>0 && !Objects.equals(fonct.getNom(),fonctionnaire.getNom()))
     fonct.setNom(fonctionnaire.getNom());
@@ -85,6 +70,7 @@ public class FonctionnaireService {
     fonct.setSanctions(fonctionnaire.getSanctions());
     if(fonctionnaire.getDocumentsPiecesJointes()!= null )
     fonct.setDocumentsPiecesJointes(fonctionnaire.getDocumentsPiecesJointes());
+    return fonctionnaireRepository.save(fonct) ;
 }
 
     public void deleteFonct(String cin) {
@@ -94,5 +80,9 @@ public class FonctionnaireService {
         }
         else fonctionnaireRepository.deleteById(cin);
 
+    }
+
+    public Fonctionnaire getFonctById(String cin) {
+        return fonctionnaireRepository.findById(cin).orElseThrow(()-> new IllegalStateException("NO INFOPERSO WITH THIS CIN : "+cin+"IS FOUND"));
     }
 }

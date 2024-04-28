@@ -28,6 +28,8 @@ public class DocumentPieceJointe {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn (name="SousDossier_id",referencedColumnName = "id")
     private SousDossier sousDossier;
+    @ManyToOne
+    private  Fonctionnaire fonctionnaire;
 
     /*DocumentPieceJointe
 | id | nom                | cheminStockage    | type | fonctionnaire_id | sous_dossier_id |

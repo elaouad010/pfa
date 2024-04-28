@@ -30,11 +30,11 @@ public class InfoFamiliales {
     private Integer nombreEnfants;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn (name="InfoFamiliales_id",referencedColumnName = "id")
+    @JoinColumn (name="InfoFamilialesConj_id",referencedColumnName = "id")
     private List<Conjoint> conjoints;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn (name="InfoFamiliales_id",referencedColumnName = "id")
+    @JoinColumn (name="InfoFamilialesEnf_id",referencedColumnName = "id")
     private List<Enfant> enfants;
 
 }

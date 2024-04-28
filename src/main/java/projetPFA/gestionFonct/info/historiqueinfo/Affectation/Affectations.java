@@ -21,4 +21,6 @@ public class Affectations {
     private Entite entite;
     private Date dateAffectation;
     private String poste ;
+    @ManyToOne
+    private  Fonctionnaire fonctionnaire;
 }

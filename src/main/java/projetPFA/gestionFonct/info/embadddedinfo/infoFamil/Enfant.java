@@ -20,5 +20,6 @@ public class Enfant {
     String prenom;
     String nomMere;
     Date dateNaissance;
-
+    @ManyToOne
+    private InfoFamiliales infoFamiliales;
 }

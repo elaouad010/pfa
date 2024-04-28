@@ -20,5 +20,6 @@ public class Mouvements{
     private String administration;
     private Date dateDebut;
     private Date dateFin;
-
+    @ManyToOne
+    private  Fonctionnaire fonctionnaire;
 }

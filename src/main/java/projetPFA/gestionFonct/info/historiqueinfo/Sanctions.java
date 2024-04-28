@@ -22,6 +22,7 @@ public class Sanctions {
     private Date dateSanction;
 
 
-
+    @ManyToOne
+    private  Fonctionnaire fonctionnaire;
 
 }

@@ -20,6 +20,7 @@ public class SousDossier {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private SousDoussiers nomSousDoussier;
-
+    @OneToMany
+    public List<DocumentPieceJointe> documentsPieceJointe;
 
 }

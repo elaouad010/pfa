@@ -20,5 +20,6 @@ public class Diplomes {
     private String specialite;
     private Date dateObtention;
     private String etablissement;
-
+    @ManyToOne
+    private  Fonctionnaire fonctionnaire;
 }

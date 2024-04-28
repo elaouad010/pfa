@@ -17,7 +17,8 @@ public class Notations {
     private Long id;
     private int annee;
     private int note;
-
+    @ManyToOne
+    private  Fonctionnaire fonctionnaire;
 
     /*Notations
 | id | annee | note | fonctionnaire_id |
