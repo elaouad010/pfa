@@ -3,6 +3,7 @@ package projetPFA.gestionFonct;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import lombok.*;
+import projetPFA.gestionFonct.DemandesAbsences.Demande_absence;
 import projetPFA.gestionFonct.info.embadddedinfo.*;
 import projetPFA.gestionFonct.info.embadddedinfo.infoAdmin.InfoAdministratives;
 import projetPFA.gestionFonct.info.embadddedinfo.infoFamil.InfoFamiliales;
@@ -70,8 +71,9 @@ public class Fonctionnaire {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn (name="fonctionnaire_id",referencedColumnName = "cin")
     private List<Affectations> affectations;
-    //@OneToMany(mappedBy = "fonctionnaire")
-    //private List<AutorisationAbsence> autorisationsAbsences;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn (name="fonctionnaire_id",referencedColumnName = "cin")
+    private List<Demande_absence> demande_absence;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn (name="fonctionnaire_id",referencedColumnName = "cin")
     private List<Sanctions> sanctions;

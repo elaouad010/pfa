@@ -25,7 +25,7 @@ public class DocumentPieceJointe {
     private String type;
 
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn (name="SousDossier_id",referencedColumnName = "id")
     private SousDossier sousDossier;
     @ManyToOne
