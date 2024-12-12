@@ -1,19 +1,22 @@
-package projetPFA.gestionFonct.DemandesAbsences.Services;
+package projetPFA.gestionFonct.Services;
 import jakarta.transaction.Transactional;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import projetPFA.gestionFonct.DemandesAbsences.Demande_absence;
-import projetPFA.gestionFonct.DemandesAbsences.statusdemande;
+import projetPFA.gestionFonct.Demande_absence;
+import projetPFA.gestionFonct.InsufficientAbsenceDaysException;
+import projetPFA.gestionFonct.statusdemande;
 import projetPFA.gestionFonct.Fonctionnaire;
-import projetPFA.gestionFonct.DemandesAbsences.Repositories.DemandeRepository;
+import projetPFA.gestionFonct.Repositories.DemandeRepository;
 import projetPFA.gestionFonct.Repositories.FonctionnaireRepository;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.List;
 
-import static projetPFA.gestionFonct.DemandesAbsences.statusdemande.ACCEPTED;
-import static projetPFA.gestionFonct.DemandesAbsences.statusdemande.REFUSED;
+import static projetPFA.gestionFonct.statusdemande.ACCEPTED;
+import static projetPFA.gestionFonct.statusdemande.REFUSED;
 
 @Data
 @Service
@@ -74,22 +77,60 @@ public class Demandeservice {
             return null;
         }
     }
+    public List<Demande_absence> getDemandesByCin(String cin) {
+        return demandeRepository.findByToncin(cin);
+    }
+    public List<Demande_absence> getAcceptedDemandesByCin(String cin) {
+        return demandeRepository.findByToncinAndStatus(cin, statusdemande.ACCEPTED);
+    }
+    public List<Demande_absence> getRefusedDemandesByCin(String cin) {
+        return demandeRepository.findByToncinAndStatus(cin, statusdemande.REFUSED);
+    }
     public Demande_absence getDemandByCode(Long code) {
         return demandeRepository.findById(code).orElseThrow(()-> new IllegalStateException("NO DEMANDE FOUND WITH THIS CODE : "+code+"IS FOUND"));
     }
     public long countdemandes() {
         return demandeRepository.count();
     }
+
     public Demande_absence saveDemandeForFonctionnaire(Demande_absence demande, String cin) {
-        Fonctionnaire fonctionnaire = fonctionnaireRepository.findById(cin).orElseThrow(()-> new IllegalStateException("NO fonctionnaire FOUND WITH THIS cin : "+cin+"IS FOUND"));;
-        if (fonctionnaire != null) {
-            demande.setFonctionnaire(fonctionnaire);
-            return demandeRepository.save(demande);
-        } else {
-            // Gérer le cas où le fonctionnaire n'est pas trouvé
-            throw new RuntimeException("Fonctionnaire not found with cin: " + cin);
+        Fonctionnaire fonctionnaire = fonctionnaireRepository.findById(cin)
+                .orElseThrow(() -> new IllegalStateException("Aucun fonctionnaire trouvé avec ce CIN : " + cin));
+
+        int nbrAbsenceRestant = fonctionnaire.getNbrAbsence();
+        int nbrJourDemandes = demande.getNbrjours();
+
+        if (nbrAbsenceRestant < nbrJourDemandes) {
+            throw new InsufficientAbsenceDaysException("Le nombre de jours d'absence restants est insuffisant.");
         }
+
+        int nouveauReliquat = nbrAbsenceRestant - nbrJourDemandes;
+        fonctionnaire.setNbrAbsence(nouveauReliquat);
+        fonctionnaireRepository.save(fonctionnaire);
+
+        demande.setReliquat(nouveauReliquat);
+        demande.setFonctionnaire(fonctionnaire);
+        return demandeRepository.save(demande);
     }
+    private LocalDate calculateReturnDate(LocalDate departureDate, int numberOfDays) {
+        LocalDate returnDate = departureDate;
+        int daysRemaining = numberOfDays;
+
+        while (daysRemaining > 0) {
+            returnDate = returnDate.plusDays(1);
+            if (isWeekDay(returnDate)) {
+                daysRemaining--;
+            }
+        }
+
+        return returnDate;
+    }
+
+    private boolean isWeekDay(LocalDate date) {
+        DayOfWeek dayOfWeek = date.getDayOfWeek();
+        return dayOfWeek != DayOfWeek.SATURDAY && dayOfWeek != DayOfWeek.SUNDAY;
+    }
+
     @Transactional
     public ResponseEntity<Demande_absence> accepterDemande(Long code) {
         Demande_absence demandeAbsence = demandeRepository.findById(code)

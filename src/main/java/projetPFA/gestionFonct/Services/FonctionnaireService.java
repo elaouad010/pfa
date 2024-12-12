@@ -85,4 +85,5 @@ public class FonctionnaireService {
     public Fonctionnaire getFonctById(String cin) {
         return fonctionnaireRepository.findById(cin).orElseThrow(()-> new IllegalStateException("NO INFOPERSO WITH THIS CIN : "+cin+"IS FOUND"));
     }
+
 }

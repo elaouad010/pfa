@@ -1,6 +1,6 @@
-package projetPFA.gestionFonct.info.historiqueinfo.Affectation;
+package projetPFA.gestionFonct.info.embadddedinfo.infoAdmin;
 
-public enum Entite {
+public enum Affectation {
     divisions,
     cabinet,
     secretariat_generale,

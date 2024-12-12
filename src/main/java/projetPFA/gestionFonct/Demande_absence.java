@@ -1,8 +1,7 @@
-package projetPFA.gestionFonct.DemandesAbsences;
+package projetPFA.gestionFonct;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import lombok.*;
-import projetPFA.gestionFonct.Fonctionnaire;
 
 import java.util.Date;
 @Data
@@ -19,6 +18,7 @@ public class Demande_absence {
     private Long code;
     private String toncin;
     private Date datededepart;
+    private Date dateRetour;
     private int nbrjours;
     private int nbrjourdeduire;
     private int nbrjournepasdeduire;
@@ -30,8 +30,6 @@ public class Demande_absence {
 
     @ManyToOne
     private Fonctionnaire fonctionnaire;
-
-
 
 
 }

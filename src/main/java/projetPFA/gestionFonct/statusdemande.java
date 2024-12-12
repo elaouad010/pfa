@@ -1,4 +1,4 @@
-package projetPFA.gestionFonct.DemandesAbsences;
+package projetPFA.gestionFonct;
 
 public enum statusdemande {
     ACCEPTED,

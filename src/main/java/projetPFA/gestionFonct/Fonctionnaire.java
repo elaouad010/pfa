@@ -3,7 +3,7 @@ package projetPFA.gestionFonct;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import lombok.*;
-import projetPFA.gestionFonct.DemandesAbsences.Demande_absence;
+import projetPFA.gestionFonct.Formations.BesoinFormation;
 import projetPFA.gestionFonct.info.embadddedinfo.*;
 import projetPFA.gestionFonct.info.embadddedinfo.infoAdmin.InfoAdministratives;
 import projetPFA.gestionFonct.info.embadddedinfo.infoFamil.InfoFamiliales;
@@ -38,6 +38,8 @@ public class Fonctionnaire {
     private String adresse;
     private String numeroTel;
     private String email;
+    private String structure;
+    private int nbrAbsence=22;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "infofam_id", referencedColumnName = "id")
     private InfoFamiliales infoFamiliales;
@@ -57,11 +59,13 @@ public class Fonctionnaire {
     private InfoAssurance infoAssurance;
 
 
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn (name="fonctionnaire_id",referencedColumnName = "cin")
     private List<Notations> notations;
-    //@OneToMany(mappedBy = "fonctionnaire")
-   // private List<FormationContinue> formationsContinues;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn (name="fonctionnaire_id",referencedColumnName = "cin")
+    private List<BesoinFormation> formationsContinues;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn (name="fonctionnaire_id",referencedColumnName = "cin")
     private List<Diplomes> diplomes;

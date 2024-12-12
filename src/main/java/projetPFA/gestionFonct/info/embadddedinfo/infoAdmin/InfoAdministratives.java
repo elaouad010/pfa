@@ -2,8 +2,10 @@ package projetPFA.gestionFonct.info.embadddedinfo.infoAdmin;
 
 import jakarta.persistence.*;
 import lombok.*;
+import projetPFA.gestionFonct.info.historiqueinfo.Notations;
 
 import java.util.Date;
+import java.util.List;
 
 
 @Data
@@ -28,5 +30,11 @@ public class InfoAdministratives {
     private String echelon;
     private int indice;
     private String statutAdministratif;
-    private SituationAdministrative situationAdministrative;
+    private SituationAdministrativeEnum situationAdministrative=SituationAdministrativeEnum.en_fonction;
+    private String AdminAcc ;
+    private Affectation Affectation ;
+    private Date DateSortie;
+
+
+
 }

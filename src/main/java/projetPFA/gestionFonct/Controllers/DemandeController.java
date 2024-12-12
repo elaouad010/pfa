@@ -1,13 +1,12 @@
-package projetPFA.gestionFonct.DemandesAbsences.Controllers;
+package projetPFA.gestionFonct.Controllers;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import projetPFA.gestionFonct.DemandesAbsences.Demande_absence;
-import projetPFA.gestionFonct.DemandesAbsences.Services.Demandeservice;
-import projetPFA.gestionFonct.Services.FonctionnaireService;
+import projetPFA.gestionFonct.Demande_absence;
+import projetPFA.gestionFonct.Services.Demandeservice;
 
 import java.util.List;
 
@@ -24,11 +23,15 @@ public class DemandeController {
         this.demandeservice=demandeservice;
     }
 
-    @PostMapping(path="api/demandes/add")
-    public ResponseEntity<Demande_absence> ajouterDemande(@RequestBody Demande_absence demande) {
+    @PostMapping(path = "api/demandes/add")
+    public ResponseEntity<?> ajouterDemande(@RequestBody Demande_absence demande) {
         String cin = demande.getToncin();
-        Demande_absence newDemande = demandeservice.saveDemandeForFonctionnaire(demande, cin);
-        return new ResponseEntity<>(newDemande, HttpStatus.CREATED);
+        try {
+            Demande_absence newDemande = demandeservice.saveDemandeForFonctionnaire(demande, cin);
+            return new ResponseEntity<>(newDemande, HttpStatus.CREATED);
+        } catch (IllegalStateException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping(path="api/demandes/getAll")
@@ -63,6 +66,21 @@ public class DemandeController {
     public ResponseEntity<Long> countdemande() {
         long count = demandeservice.countdemandes();
         return ResponseEntity.ok(count);
+    }
+    @GetMapping("/api/demandes/cin/{cin}")
+    public ResponseEntity<List<Demande_absence>> getDemandesByCin(@PathVariable String cin) {
+        List<Demande_absence> demandes = demandeservice.getDemandesByCin(cin);
+        return ResponseEntity.ok(demandes);
+    }
+    @GetMapping(path="api/demandes/acceptedbycin/{cin}")
+    public ResponseEntity<List<Demande_absence>> getAcceptedDemandesByCin(@PathVariable String cin) {
+        List<Demande_absence> demandes = demandeservice.getAcceptedDemandesByCin(cin);
+        return new ResponseEntity<>(demandes, HttpStatus.OK);
+    }
+    @GetMapping(path="api/demandes/refusedbycin/{cin}")
+    public ResponseEntity<List<Demande_absence>> getRefusedDemandesByCin(@PathVariable String cin) {
+        List<Demande_absence> demandes = demandeservice.getRefusedDemandesByCin(cin);
+        return new ResponseEntity<>(demandes, HttpStatus.OK);
     }
     @GetMapping("/{code}")
     public ResponseEntity<Demande_absence> getDemandByCode(@PathVariable Long code) {
