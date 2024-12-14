@@ -23,6 +23,7 @@ import static org.mockito.Mockito.*;
 class FonctionnaireTest {
 
     @Mock
+
     private FonctionnaireRepository fonctionnaireRepository;
 
     @InjectMocks
