@@ -3,11 +3,6 @@ package projetPFA.gestionFonct.Formations;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import lombok.*;
-import projetPFA.gestionFonct.Fonctionnaire;
-import projetPFA.gestionFonct.info.historiqueinfo.Notations;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @Entity

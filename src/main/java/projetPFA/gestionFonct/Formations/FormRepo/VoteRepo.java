@@ -1,7 +1,6 @@
 package projetPFA.gestionFonct.Formations.FormRepo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import projetPFA.gestionFonct.Formations.BesoinFormation;
 import projetPFA.gestionFonct.Formations.Vote;
 
 import java.util.List;

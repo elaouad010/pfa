@@ -2,10 +2,8 @@ package projetPFA.gestionFonct.info.embadddedinfo.infoAdmin;
 
 import jakarta.persistence.*;
 import lombok.*;
-import projetPFA.gestionFonct.info.historiqueinfo.Notations;
 
 import java.util.Date;
-import java.util.List;
 
 
 @Data

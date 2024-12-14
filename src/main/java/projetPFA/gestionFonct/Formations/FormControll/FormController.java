@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import projetPFA.gestionFonct.Formations.BesoinFormation;
 import projetPFA.gestionFonct.Formations.FormServ.FormService;
 import projetPFA.gestionFonct.Formations.Vote;
-import projetPFA.gestionFonct.Services.FonctionnaireService;
 
-import java.util.Comparator;
 import java.util.List;
 
 @Data

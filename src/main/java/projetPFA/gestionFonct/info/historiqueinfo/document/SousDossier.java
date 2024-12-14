@@ -2,10 +2,6 @@ package projetPFA.gestionFonct.info.historiqueinfo.document;
 
 import jakarta.persistence.*;
 import lombok.*;
-import projetPFA.gestionFonct.Fonctionnaire;
-import projetPFA.gestionFonct.info.embadddedinfo.infoFamil.Conjoint;
-
-import java.util.List;
 
 
 @Data

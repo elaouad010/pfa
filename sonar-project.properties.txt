@@ -1,4 +1,0 @@
-sonar.projectKey=PFA2024
-sonar.projectName=PFA2024
-sonar.host.url=http://localhost:9000
-sonar.token=sqp_bf0c5b36f7376847489457b401bad47e43e1051c

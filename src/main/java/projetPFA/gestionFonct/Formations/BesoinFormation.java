@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import lombok.*;
-import projetPFA.gestionFonct.Fonctionnaire;
-import projetPFA.gestionFonct.info.historiqueinfo.Notations;
 
 import java.util.ArrayList;
 import java.util.List;

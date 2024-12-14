@@ -2,7 +2,6 @@ package projetPFA.gestionFonct.info.embadddedinfo.infoFamil;
 
 import jakarta.persistence.*;
 import lombok.*;
-import projetPFA.gestionFonct.Fonctionnaire;
 
 import java.util.Date;
 

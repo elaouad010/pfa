@@ -112,7 +112,7 @@ public class Demandeservice {
         demande.setFonctionnaire(fonctionnaire);
         return demandeRepository.save(demande);
     }
-    private LocalDate calculateReturnDate(LocalDate departureDate, int numberOfDays) {
+    public LocalDate calculateReturnDate(LocalDate departureDate, int numberOfDays) {
         LocalDate returnDate = departureDate;
         int daysRemaining = numberOfDays;
 
